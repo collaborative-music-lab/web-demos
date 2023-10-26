@@ -14,13 +14,13 @@ const sequence = new Tone.Pattern((time, note) => {
 
     monosynth.triggerAttackRelease(note, .05, time);
 
-    // if(midiNote < 65){
-    //     kick.start();
-    // }
+    if(midiNote < 65){
+        kick.start();
+    }
 
-    // if(midiNote > 65){
-    //     hihat.triggerAttackRelease(.05, time, (midiNote-60)/12);
-    // }
+    if(midiNote > 65){
+        hihat.triggerAttackRelease(.05, time, (midiNote-60)/12);
+    }
 
     //monitor note
     //console.log( note)
@@ -88,7 +88,43 @@ sequenceRateDropdown.addEventListener('change', () => {
 });
 
 
-/******** Get JPEG data **************/
+/********Accessing NOAA data **************/
+const stationId = "9410170";  // Replace with the desired station's ID
+let tideValues = [] //placeholder for received data
+
+// Get the current date and time
+const currentDate = new Date();
+const oneYearAgo = new Date(currentDate);
+oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
+
+// Format the date range in YYYYMMDD format
+const beginDate = formatDate(oneYearAgo);
+const endDate = formatDate(currentDate);
+
+// Define a function to format a date in the required format (YYYYMMDD)
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}${month}${day}`;
+}
+
+// Construct the API endpoint URL with the date range
+const apiUrl = `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=${beginDate}&end_date=${endDate}&station=${stationId}&product=predictions&datum=MLLW&time_zone=lst_ldt&units=english&interval=hilo&format=json`;
+
+// Use the fetch function to access the API and retrieve tide predictions
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    tideValues = data.predictions.map(prediction => prediction.v);
+    //saveTextAsFile('data.txt', tideValues);
+    console.log("data received")
+
+    sequence.values = dataToQuantizedPitch(tideValues)
+  })
+  .catch(error => {
+    console.error("Error fetching tide data:", error);
+  });
 
 
 /******** HELPER FUNCTIONS **************/
