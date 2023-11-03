@@ -49,17 +49,17 @@ const sequence = new Tone.Pattern((time, note) => {
 
 // }, notes);
 
-const seq = function(){
-  //let midiNote= Tone.Frequency(notes[sequenceIndex]).toMidi()
-  let midiNote= notes[sequenceIndex]
-    synth.triggerAttackRelease(midiNote, .1);
+// const seq = function(){
+//   //let midiNote= Tone.Frequency(notes[sequenceIndex]).toMidi()
+//   let midiNote= notes[sequenceIndex]
+//     synth.triggerAttackRelease(midiNote, .1);
 
-    sequenceIndex = (sequenceIndex+1) % notes.length
-}
-let myseq 
+//     sequenceIndex = (sequenceIndex+1) % notes.length
+// }
+// let myseq 
 
-myseq = setInterval(seq, 250)
-clearInterval( myseq)
+// myseq = setInterval(seq, 250)
+// clearInterval( myseq)
 
 sequence.interval = '8n';
 
