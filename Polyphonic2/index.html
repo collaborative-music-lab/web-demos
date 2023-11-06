@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+    <main>
+    </main>
+    <script type="module" src="main.js"></script>
+    <script type="module" src="synthDef.js"></script>
+    <button id="startStopButton">Start Sequencer</button>
+    <label for="sequenceRate">Select Sequence Rate:</label>
+    <select id="sequenceRate">
+      <option value="4n">4n</option>
+      <option value="8n">8n</option>
+      <option value="16n">16n</option>
+    </select>
+  </body>
+</html>
